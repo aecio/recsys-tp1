@@ -1,0 +1,8 @@
+.classpath
+.project
+.settings/
+target/
+*.class
+*.jar
+src/main/resources/ml-100k/
+src/main/resources/files
