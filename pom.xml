@@ -45,7 +45,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>Recommender</mainClass>
+							<mainClass>br.ufmg.dcc.recsys.Recommender</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
