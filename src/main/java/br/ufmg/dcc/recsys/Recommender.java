@@ -1,5 +1,6 @@
 package br.ufmg.dcc.recsys;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -12,9 +13,11 @@ public class Recommender {
         if (args.length != 3) {
             throw new IllegalArgumentException("Invalid parameters.");
         }
+        PrintStream ps = new PrintStream("./debug.txt");
+        System.setErr(ps);
         
-        String usersFile = args[0];
-        String itemsFile = args[1];
+//        String usersFile = args[0];
+//        String itemsFile = args[1];
         String ratingsFile = args[2];
 
 

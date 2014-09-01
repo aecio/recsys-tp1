@@ -38,13 +38,17 @@ public class TopkRecommender {
         int numItems = userItemMatrix.numCols();
         return IntStream.range(0, numItems)
                 .filter( (i) -> userItemMatrix.value(user, i) == 0d)
-//                .map((obj) -> { System.out.println("filter: "+obj); return obj;})
+//                .map((obj) -> { System.err.println("filter: "+obj); return obj;})
                 .mapToObj((i) -> new Prediction(user, i, predictor.predict(i, user)))
-//                .map((obj) -> { System.out.println("pred: "+obj); return obj;})
+                .map((obj) -> {
+//                    System.err.println("pred: "+obj);
+                    if(Double.isNaN(obj.score)) {
+                        throw new IllegalStateException("Invalid score=NaN! "+obj);
+                    }
+                    return obj;
+                })
                 .sorted(Prediction::compare)
-//                .map((obj) -> { System.out.println("sort: "+obj); return obj;})
                 .limit(numberOfRecommendations)
-//                .map((obj) -> { System.out.println("limit: "+obj); return obj;})
                 .collect(Collectors.toList());
         
     }
