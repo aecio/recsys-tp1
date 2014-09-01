@@ -24,9 +24,10 @@ public class UserToUserPredictor implements Predictor {
         double similarities[][] = new double[userItemMatrix.numRows()][userItemMatrix.numRows()];
         for(int userA = 0; userA < userItemMatrix.numRows(); userA++) {
             for(int userB = 0; userB < userItemMatrix.numRows(); userB++) {
-//                if(userA > userB) {
-                    similarities[userA][userB] = userItemMatrix.pearsonCorrelationSimilarity(userA, userB);
-//                }
+                similarities[userA][userB] = userItemMatrix.pearsonCorrelationSimilarity(userA, userB);
+                if(Double.isNaN(similarities[userA][userB])) {
+                    similarities[userA][userB] = Double.NEGATIVE_INFINITY;
+                }                    
             }
         }
         return similarities;
@@ -59,6 +60,7 @@ public class UserToUserPredictor implements Predictor {
     }
     
     public double predict(int item, int user) {
+//        System.err.println("predict()");
         // get k nearest users, as b, from user a
 //        List<User> users = new ArrayList<UserToUserPredictor.User>(userSimilarities.length);
 //        for(int i = 0; i < userItemMatrix.numRows(); i++) {
@@ -88,6 +90,9 @@ public class UserToUserPredictor implements Predictor {
         }
         
 //        System.err.println("averageRatings[user]="+averageRatings[user]+ " + numerator="+partialPredictions+" / similaritiesSum="+similaritiesSum);
+        if(Double.isNaN(averageRatings[user] + partialPredictions/similaritiesSum)) {
+            throw new IllegalStateException("Invalid prediction! prediction=NaN");
+        }
         return averageRatings[user] + partialPredictions/similaritiesSum;
     }
 
