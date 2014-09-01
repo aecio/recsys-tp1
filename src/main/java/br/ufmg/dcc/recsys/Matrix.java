@@ -1,3 +1,4 @@
+package br.ufmg.dcc.recsys;
 /*************************************************************************
  * Compilation: javac Matrix.java Execution: java Matrix
  *
@@ -251,26 +252,26 @@ public class Matrix {
     }
 
     public double pearsonCorrelationSimilarity(int a, int b) {
-        System.err.println("==============================");
+//        System.err.println("==============================");
         double r_avg_a = this.lineAvgNonZero(a);
         double r_avg_b = this.lineAvgNonZero(b);
         
-        System.err.println("r_avg_a: "+r_avg_a);
-        System.err.println("r_avg_b: "+r_avg_b);
-        
+//        System.err.println("r_avg_a: "+r_avg_a);
+//        System.err.println("r_avg_b: "+r_avg_b);
+//        
         double numerator = 0d;
         for(int p=0; p < N; p++) {
             if(data[a][p] != 0 && data[b][p] != 0) {
                 numerator +=  (data[a][p] - r_avg_a) * (data[b][p] - r_avg_b); 
-                System.err.println("(data[a][p] - r_avg_a) = " + (data[a][p]+" - "+ r_avg_a)+" = "+(data[a][p] - r_avg_a) );
-                System.err.println("(data[b][p] - r_avg_b) = " + (data[b][p]+" - "+ r_avg_b)+" = "+ + (data[b][p] - r_avg_b));
-                System.err.println("    (times) = " + (data[a][p] - r_avg_a) * (data[b][p] - r_avg_b));
-                System.err.println("(numerator) = " + numerator);
+//                System.err.println("(data[a][p] - r_avg_a) = " + (data[a][p]+" - "+ r_avg_a)+" = "+(data[a][p] - r_avg_a) );
+//                System.err.println("(data[b][p] - r_avg_b) = " + (data[b][p]+" - "+ r_avg_b)+" = "+ + (data[b][p] - r_avg_b));
+//                System.err.println("    (times) = " + (data[a][p] - r_avg_a) * (data[b][p] - r_avg_b));
+//                System.err.println("(numerator) = " + numerator);
             }
         }
         
-        System.err.println("numerator: "+numerator);
-        System.err.println("------------------------------");
+//        System.err.println("numerator: "+numerator);
+//        System.err.println("------------------------------");
         
         double sum_a = 0d;
         double sum_b = 0d;
@@ -279,24 +280,24 @@ public class Matrix {
                 sum_a += Math.pow((data[a][p] - r_avg_a), 2);
                 sum_b += Math.pow((data[b][p] - r_avg_b), 2);
                 
-                System.err.println("(data[a][p] - r_avg_a) = " + (data[a][p]+" - "+ r_avg_a)+" = "+(data[a][p] - r_avg_a) );
-                System.err.println("(data[a][p] - r_avg_a)^2 = " + Math.pow((data[a][p] - r_avg_a), 2) );
-                System.err.println("(sum_a) = " +sum_a);
-                System.err.println();
-                
-                System.err.println("(data[b][p] - r_avg_b) = " + (data[b][p]+" - "+ r_avg_b)+" = "+ + (data[b][p] - r_avg_b));
-                System.err.println("(data[b][p] - r_avg_b)^2 = " + Math.pow((data[b][p] - r_avg_b), 2));
-                System.err.println("(sum_b) = " +sum_b);
-                System.err.println();
+//                System.err.println("(data[a][p] - r_avg_a) = " + (data[a][p]+" - "+ r_avg_a)+" = "+(data[a][p] - r_avg_a) );
+//                System.err.println("(data[a][p] - r_avg_a)^2 = " + Math.pow((data[a][p] - r_avg_a), 2) );
+//                System.err.println("(sum_a) = " +sum_a);
+//                System.err.println();
+//                
+//                System.err.println("(data[b][p] - r_avg_b) = " + (data[b][p]+" - "+ r_avg_b)+" = "+ + (data[b][p] - r_avg_b));
+//                System.err.println("(data[b][p] - r_avg_b)^2 = " + Math.pow((data[b][p] - r_avg_b), 2));
+//                System.err.println("(sum_b) = " +sum_b);
+//                System.err.println();
             }
         }
         double denominator = Math.sqrt(sum_a)*Math.sqrt(sum_b);
-        System.err.println("sqrt(sum_a)="+Math.sqrt(sum_a)+ " sqrt(sum_b)="+Math.sqrt(sum_b)+ " times=" +Math.sqrt(sum_a)*Math.sqrt(sum_b));
-        System.err.println("denominator: "+denominator);
-        System.err.println("------------------------------");
-        System.err.println("similarity(a,b)="+numerator/denominator);
-        System.err.println("==============================");
-        
+//        System.err.println("sqrt(sum_a)="+Math.sqrt(sum_a)+ " sqrt(sum_b)="+Math.sqrt(sum_b)+ " times=" +Math.sqrt(sum_a)*Math.sqrt(sum_b));
+//        System.err.println("denominator: "+denominator);
+//        System.err.println("------------------------------");
+//        System.err.println("similarity(a,b)="+numerator/denominator);
+//        System.err.println("==============================");
+//        
         return numerator/denominator;
     }
 

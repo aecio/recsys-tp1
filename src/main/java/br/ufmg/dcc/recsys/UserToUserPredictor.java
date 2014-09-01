@@ -1,10 +1,11 @@
+package br.ufmg.dcc.recsys;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
 
-public class UserToUserPredictor {
+public class UserToUserPredictor implements Predictor {
     
     private Matrix userItemMatrix;
     private double[][] userSimilarities;
@@ -49,9 +50,7 @@ public class UserToUserPredictor {
             this.avgRating= avgRating;
         }
         public static int similarityComparator(User u1, User u2) {
-            if(u1.similarity > u2.similarity) return -1;
-            if(u1.similarity < u2.similarity) return 1;
-            else return 0;
+            return Double.compare(u1.similarity,  u2.similarity)*-1;
         }
         @Override
         public String toString() {
@@ -84,11 +83,11 @@ public class UserToUserPredictor {
         for(User u : similarUsers) {
             partialPredictions += u.similarity * (userItemMatrix.value(u.id, item) - u.avgRating);
             similaritiesSum += u.similarity;
-            System.err.println("u.similarity="+u.similarity +" * p("+u.id+", "+item+")="+ userItemMatrix.value(u.id, item) +" - u.avgRating=" + u.avgRating);
-            System.err.println("similarities_sum="+similaritiesSum);
+//            System.err.println("u.similarity="+u.similarity +" * p("+u.id+", "+item+")="+ userItemMatrix.value(u.id, item) +" - u.avgRating=" + u.avgRating);
+//            System.err.println("similarities_sum="+similaritiesSum);
         }
         
-        System.err.println("averageRatings[user]="+averageRatings[user]+ " + numerator="+partialPredictions+" / similaritiesSum="+similaritiesSum);
+//        System.err.println("averageRatings[user]="+averageRatings[user]+ " + numerator="+partialPredictions+" / similaritiesSum="+similaritiesSum);
         return averageRatings[user] + partialPredictions/similaritiesSum;
     }
 

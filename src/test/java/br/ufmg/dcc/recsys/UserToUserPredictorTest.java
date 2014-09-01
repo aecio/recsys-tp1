@@ -1,7 +1,11 @@
+package br.ufmg.dcc.recsys;
 import static org.hamcrest.Matchers.closeTo;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
+
+import br.ufmg.dcc.recsys.Matrix;
+import br.ufmg.dcc.recsys.UserToUserPredictor;
 
 
 public class UserToUserPredictorTest {
