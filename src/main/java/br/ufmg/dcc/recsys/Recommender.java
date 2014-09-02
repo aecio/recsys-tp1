@@ -48,7 +48,6 @@ public class Recommender {
                 .mapToObj((u) -> userToUserRecommender.recommend(u))
                 .flatMap((recs) -> recs.stream() )
                 .forEach((p) -> System.out.println((p.user+1) +" "+ (p.item+1) +" "+ p.score) );
-        
     }
 
     static class Rating {
@@ -72,7 +71,6 @@ public class Recommender {
                         String[] t = line.split("\\t");
                         return new Rating(Integer.valueOf(t[0]), Integer.valueOf(t[1]), Integer.valueOf(t[2]), Integer.valueOf(t[3]));
                     })
-//                    .limit(1000)
                    .collect(Collectors.toList());
             
             

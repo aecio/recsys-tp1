@@ -50,7 +50,6 @@ public class TopkRecommender {
                 .sorted(Prediction::compare)
                 .limit(numberOfRecommendations)
                 .collect(Collectors.toList());
-        
     }
 
 }
