@@ -4,7 +4,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
-
 public class UserToUserPredictor implements Predictor {
     
     private Matrix userItemMatrix;
@@ -25,7 +24,7 @@ public class UserToUserPredictor implements Predictor {
             for(int userB = 0; userB < userItemMatrix.numRows(); userB++) {
                 similarities[userA][userB] = userItemMatrix.pearsonCorrelationSimilarity(userA, userB);
                 if(Double.isNaN(similarities[userA][userB])) {
-                    similarities[userA][userB] = Double.NEGATIVE_INFINITY;
+                    similarities[userA][userB] = 0;
                 }                    
             }
         }
