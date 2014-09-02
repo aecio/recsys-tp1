@@ -231,6 +231,18 @@ public class Matrix {
         return sum;
     }
 
+    public double columnAvgNonZero(int column) {
+        double sum = 0d;
+        int total = 0;
+        for (int i = 0; i < data.length; i++) {
+            if(data[i][column] != 0) {
+                sum += data[i][column];
+                total++;
+            }
+        }
+        return sum / total;
+    }
+    
     public double lineAvg(int line) {
         double sum = 0d;
         for (int i = 0; i < data[line].length; i++) {
@@ -312,4 +324,5 @@ public class Matrix {
     public double value(int row, int collumn) {
         return data[row][collumn];
     }
+
 }

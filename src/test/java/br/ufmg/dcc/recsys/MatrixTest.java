@@ -59,6 +59,22 @@ public class MatrixTest {
     }
     
     @Test
+    public void testCollumnAverageNonZero() {
+        // given
+        double[][] d = {
+            { 1, 1, 2 },
+            { 1, 2, 3 },
+            { 1, 3, 0}
+        };
+        Matrix D = new Matrix(d);
+        
+        //then
+        assertThat(D.columnAvgNonZero(0), is((1+1+1)/3d));
+        assertThat(D.columnAvgNonZero(1), is((1+2+3)/3d));
+        assertThat(D.columnAvgNonZero(2), is((2+3)/2d));
+    }
+    
+    @Test
     public void testPearsonCorrelationSimilarity() {
         // given
         final double nan = 0;
