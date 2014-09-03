@@ -61,29 +61,34 @@ public class UserToUserPredictor implements Predictor {
         // get k nearest users, as b, from user a
         List<User> similarUsers = IntStream
                 .range(0, userItemMatrix.numRows())
-                .filter(i -> (i != user))
-                .mapToObj(i -> new User(i, userSimilarities[user][i], averageRatings[i]))
+                .filter(u -> u != user)
+                .filter(u -> userItemMatrix.value(u, item) != 0d)
+                .mapToObj(u -> new User(u, userSimilarities[user][u], averageRatings[u]))
                 .sorted(User::similarityComparator)
                 .limit(kNearestUsers)
-//                .map((u) -> { System.err.println(u); return u; })
                 .collect(Collectors.toList());
         
-        // for each user, compute predictions
-        double partialPredictions = 0d;
-        double similaritiesSum = 0d;
-        
-        for(User u : similarUsers) {
-            partialPredictions += u.similarity * (userItemMatrix.value(u.id, item) - u.avgRating);
-            similaritiesSum += u.similarity;
-//            System.err.println("u.similarity="+u.similarity +" * p("+u.id+", "+item+")="+ userItemMatrix.value(u.id, item) +" - u.avgRating=" + u.avgRating);
-//            System.err.println("similarities_sum="+similaritiesSum);
+        double score;
+        if(similarUsers.size() == 0) {
+            score = averageRatings[user];
+        } else {
+            // for each user, compute predictions
+            double partialPredictions = 0d;
+            double similaritiesSum = 0d;
+            for(User u : similarUsers) {
+                final double userRating = userItemMatrix.value(u.id, item);
+                if(userRating != 0d) {
+                    partialPredictions += u.similarity * (userRating - u.avgRating);
+                    similaritiesSum += Math.abs(u.similarity);
+                }
+            }
+            score = averageRatings[user] + (partialPredictions/similaritiesSum);
         }
         
-//        System.err.println("averageRatings[user]="+averageRatings[user]+ " + numerator="+partialPredictions+" / similaritiesSum="+similaritiesSum);
-        final double score = averageRatings[user] + partialPredictions/similaritiesSum;
         if(Double.isNaN(score)) {
             throw new IllegalStateException("Invalid prediction! prediction=NaN");
         }
+        
         return score;
     }
 

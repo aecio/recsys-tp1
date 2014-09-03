@@ -312,6 +312,33 @@ public class Matrix {
 //        
         return numerator/denominator;
     }
+    
+    
+    public double pearsonCorrelationSimilarityAdjustedByCorrated(int a, int b) {
+      double r_avg_a = this.lineAvgNonZero(a);
+      double r_avg_b = this.lineAvgNonZero(b);
+      
+      int corated = 0;
+      double numerator = 0d;
+      for(int p=0; p < N; p++) {
+          if(data[a][p] != 0 && data[b][p] != 0) {
+              numerator +=  (data[a][p] - r_avg_a) * (data[b][p] - r_avg_b);
+              corated++;
+          }
+      }
+      
+      double sum_a = 0d;
+      double sum_b = 0d;
+      for(int p=0; p < N; p++) {
+          if(data[a][p] != 0 && data[b][p] != 0) {
+              sum_a += Math.pow((data[a][p] - r_avg_a), 2);
+              sum_b += Math.pow((data[b][p] - r_avg_b), 2);
+          }
+      }
+      double denominator = Math.sqrt(sum_a)*Math.sqrt(sum_b);
+      
+      return Math.log(corated)*(numerator/denominator);
+  }
 
     public int numRows() {
         return M;
@@ -323,6 +350,25 @@ public class Matrix {
 
     public double value(int row, int collumn) {
         return data[row][collumn];
+    }
+    
+    public void printLineAvg(int line) {
+        for (int i = 0; i < data[line].length; i++) {
+            if(data[line][i]!=0d) {
+                System.err.print(" data["+line+"]["+i+"]="+data[line][i]);
+            }
+        }
+        System.err.println();
+    }
+    
+    public void printCorrated(int u1, int u2) {
+        System.err.println("corrated("+u1+","+u2+"):");
+        for (int i = 0; i < M; i++) {
+            if(data[u1][i] != 0d && data[u2][i] != 0d) {
+                System.err.println(" data["+u1+"]["+i+"]="+data[u1][i] +" data["+u2+"]["+i+"]="+data[u2][i]);
+            }
+        }
+        System.err.println();
     }
 
 }
