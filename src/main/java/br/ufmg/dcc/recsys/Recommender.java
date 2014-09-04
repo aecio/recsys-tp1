@@ -58,7 +58,7 @@ public class Recommender {
 
     private static void evaluatePredictors(String testFile, Matrix ratingsMatrix) {
         if(testFile != null && !testFile.isEmpty()) {
-            IntStream.of(1, 3, 5, 10, 25, 50, 100, 150, 200).forEach( k -> {
+            IntStream.of(1, 3, 5, 10, 25, 50, 75, 100, 125, 150).forEach( k -> {
                 UserToUserPredictor predictor = new UserToUserPredictor(ratingsMatrix, k);
                 double rmse = calculateRmse(testFile, predictor);
                 System.out.println("RMSE user-to-user ("+k+"): "+rmse);
