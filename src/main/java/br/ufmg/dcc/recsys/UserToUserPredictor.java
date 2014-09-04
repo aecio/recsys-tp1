@@ -68,20 +68,21 @@ public class UserToUserPredictor implements Predictor {
                 .limit(kNearestUsers)
                 .collect(Collectors.toList());
         
+        // for each user, compute predictions
+        double partialPredictions = 0d;
+        double similaritiesSum = 0d;
+        for(User u : similarUsers) {
+            final double userRating = userItemMatrix.value(u.id, item);
+            if(userRating != 0d) {
+                partialPredictions += u.similarity * (userRating - u.avgRating);
+                similaritiesSum += Math.abs(u.similarity);
+            }
+        }
+        
         double score;
-        if(similarUsers.size() == 0) {
+        if(similaritiesSum == 0) {
             score = averageRatings[user];
         } else {
-            // for each user, compute predictions
-            double partialPredictions = 0d;
-            double similaritiesSum = 0d;
-            for(User u : similarUsers) {
-                final double userRating = userItemMatrix.value(u.id, item);
-                if(userRating != 0d) {
-                    partialPredictions += u.similarity * (userRating - u.avgRating);
-                    similaritiesSum += Math.abs(u.similarity);
-                }
-            }
             score = averageRatings[user] + (partialPredictions/similaritiesSum);
         }
         
