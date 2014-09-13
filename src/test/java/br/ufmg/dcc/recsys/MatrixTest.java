@@ -93,5 +93,23 @@ public class MatrixTest {
         assertThat(D.pearsonCorrelationSimilarity(0, 3), is(closeTo(0.00d, 0.1)));
         assertThat(D.pearsonCorrelationSimilarity(0, 4), is(closeTo(-0.76d, 0.1)));
     }
+
+    @Test
+    public void testCollumnConsineSimilarity() {
+        // given
+        final double nan = 0;
+        double[][] d = {
+            { 5, 3, 4, 4,nan}, //alice
+            { 3, 1, 2, 3, 3 }, //user1
+            { 4, 3, 4, 3, 5 }, //user2
+            { 3, 3, 1, 5, 4 }, //user3
+            { 1, 5, 5, 2, 1 }  //user4
+        };
+        Matrix D = new Matrix(d);
+        
+        //then
+        assertThat(D.collumnCosineSimilarity(4, 0), is(closeTo(0.99d, 0.01)));
+        assertThat(D.collumnCosineSimilarity(4, 3), is(closeTo(0.94d, 0.01)));
+    }
     
 }

@@ -6,7 +6,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-public class UserToUserPredictorTest {
+
+public class ItemToItemPredictorTest {
 
     @Test
     public void testPredict() {
@@ -22,10 +23,10 @@ public class UserToUserPredictorTest {
         Matrix D = new Matrix(d);
         
         // when
-        final double prediction = new UserToUserPredictor(D, 2).predict(4, 0);
+        final double prediction = new ItemToItemPredictor(D, 2).predict(4, 0);
         
         // then
-        assertThat(prediction, closeTo(4.8d, 0.1));
+        assertThat(prediction, closeTo(4.51d, 0.1));
     }
     
     @Test
@@ -33,16 +34,16 @@ public class UserToUserPredictorTest {
         // given
         final double nan = 0;
         double[][] d = {
-                { 5, 3, nan, nan,nan}, //alice
-                { nan, nan, 2, 3, 3 }, //user1
-                { 4, 3, 4, 3, 5 }, //user2
-                { 3, 3, 1, 5, 4 }, //user3
-                { 1, 5, 5, 2, 1 }  //user4
+                { 5, 3,nan,nan,nan}, //alice
+                {nan,nan, 2, 3, 3 }, //user1
+                {nan,nan, 4, 3, 5 }, //user2
+                {nan,nan, 1, 5, 4 }, //user3
+                {nan,nan, 5, 2, 1 }  //user4
             };
         Matrix D = new Matrix(d);
         
         // when
-        final double prediction = new UserToUserPredictor(D, 2).predict(4, 0);
+        final double prediction = new ItemToItemPredictor(D, 2).predict(4, 0);
         
         // then
         assertThat(Double.isNaN(prediction), is(false));

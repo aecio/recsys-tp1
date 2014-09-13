@@ -58,11 +58,19 @@ public class Recommender {
 
     private static void evaluatePredictors(String testFile, Matrix ratingsMatrix) {
         if(testFile != null && !testFile.isEmpty()) {
+
             IntStream.of(1, 3, 5, 10, 25, 50, 75, 100, 125, 150).forEach( k -> {
-                UserToUserPredictor predictor = new UserToUserPredictor(ratingsMatrix, k);
-                double rmse = calculateRmse(testFile, predictor);
+                double rmse;
+                
+                UserToUserPredictor userUserPredictor = new UserToUserPredictor(ratingsMatrix, k);
+                rmse = calculateRmse(testFile, userUserPredictor);
                 System.out.println("RMSE user-to-user ("+k+"): "+rmse);
+                
+                ItemToItemPredictor itemItemPredictor = new ItemToItemPredictor(ratingsMatrix, k);
+                rmse = calculateRmse(testFile, itemItemPredictor);
+                System.out.println("RMSE item-to-item ("+k+"): "+rmse);
             });
+            
             double rmse = calculateRmse(testFile, new AverageItemRatingPredictor(ratingsMatrix));
             System.out.println("RMSE avg-item-rating: "+rmse);
             System.out.flush();

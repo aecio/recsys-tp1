@@ -367,8 +367,24 @@ public class Matrix {
             if(data[u1][i] != 0d && data[u2][i] != 0d) {
                 System.err.println(" data["+u1+"]["+i+"]="+data[u1][i] +" data["+u2+"]["+i+"]="+data[u2][i]);
             }
-        }
+        }   
         System.err.println();
+    }
+
+    public double collumnCosineSimilarity(int i1, int i2) {
+        double product = 0d;
+        double norm1 = 0d;
+        double norm2 = 0d;
+        for (int i = 0; i < M; i++) {
+            if(data[i][i1] != 0 && data[i][i2] != 0) { // only non-zero values
+                product += data[i][i1] * data[i][i2];
+                norm1 += Math.pow(data[i][i1], 2);
+                norm2 += Math.pow(data[i][i2], 2);
+            }
+        }
+        norm1 = Math.sqrt(norm1);
+        norm2 = Math.sqrt(norm2);
+        return product / (norm1*norm2);
     }
 
 }
