@@ -1,4 +1,7 @@
 package br.ufmg.dcc.recsys;
+
+import java.io.Serializable;
+
 /*************************************************************************
  * Compilation: javac Matrix.java Execution: java Matrix
  *
@@ -6,7 +9,8 @@ package br.ufmg.dcc.recsys;
  *
  *************************************************************************/
 
-public class Matrix {
+@SuppressWarnings("serial")
+public class Matrix implements Serializable {
     private final int M; // number of rows
     private final int N; // number of columns
     private final double[][] data; // M-by-N array
@@ -387,4 +391,22 @@ public class Matrix {
         return product / (norm1*norm2);
     }
 
+    public double collumnAdjustedCosineSimilarity(int i1, int i2) {
+        double product = 0d;
+        double norm1 = 0d;
+        double norm2 = 0d;
+        for (int i = 0; i < M; i++) {
+            if(data[i][i1] != 0 && data[i][i2] != 0) { // only non-zero values
+                final double lineAvg = lineAvgNonZero(i);
+                product += (data[i][i1] - lineAvg) * (data[i][i2] - lineAvg);
+                norm1 += Math.pow(data[i][i1] - lineAvg, 2);
+                norm2 += Math.pow(data[i][i2] - lineAvg, 2);
+//                System.err.println(" data["+i+"]["+i1+"]="+data[i][i1] +" data["+i+"]["+i2+"]="+data[i][i2] +" line_avg="+lineAvg);
+            }
+        }
+        norm1 = Math.sqrt(norm1);
+        norm2 = Math.sqrt(norm2);
+        return product / (norm1*norm2);
+    }
+    
 }

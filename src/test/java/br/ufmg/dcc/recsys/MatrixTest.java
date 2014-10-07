@@ -112,4 +112,21 @@ public class MatrixTest {
         assertThat(D.collumnCosineSimilarity(4, 3), is(closeTo(0.94d, 0.01)));
     }
     
+    @Test
+    public void testCollumnAdjustedConsineSimilarity() {
+        // given
+        final double nan = 0;
+        double[][] d = {
+            { 5, 3, 4, 4,nan}, //alice
+            { 3, 1, 2, 3, 3 }, //user1
+            { 4, 3, 4, 3, 5 }, //user2
+            { 3, 3, 1, 5, 4 }, //user3
+            { 1, 5, 5, 2, 1 }  //user4
+        };
+        Matrix D = new Matrix(d);
+        
+        //then
+        assertThat(D.collumnAdjustedCosineSimilarity(4, 0), is(closeTo(0.8d, 0.01)));
+    }
+    
 }

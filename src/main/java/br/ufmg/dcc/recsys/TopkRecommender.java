@@ -17,7 +17,7 @@ public class TopkRecommender {
     }
 
     public static class Prediction {
-        int item;
+        private int item;
         double score;
         int user;
         public Prediction(int user, int item, double score) {
@@ -27,6 +27,12 @@ public class TopkRecommender {
         }
         public static int compare(Prediction i1, Prediction i2) {
             return Double.compare(i1.score, i2.score)*-1;
+        }
+        public int getItem() {
+            return item;
+        }
+        public int getUser() {
+            return user;
         }
         @Override
         public String toString() {

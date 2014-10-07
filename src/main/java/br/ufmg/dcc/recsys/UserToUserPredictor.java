@@ -68,7 +68,6 @@ public class UserToUserPredictor implements Predictor {
                 .limit(kNearestUsers)
                 .collect(Collectors.toList());
         
-        // for each user, compute predictions
         double partialPredictions = 0d;
         double similaritiesSum = 0d;
         for(User u : similarUsers) {
